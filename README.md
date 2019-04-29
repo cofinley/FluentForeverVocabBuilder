@@ -3,7 +3,7 @@
 This is a tkinter program that searches and scrapes info for a vocab word and builds a card for your anki deck, based off the FF model deck.
 - Tkinter because Anki add-ons are not well documented and this separates concerns a bit.
 
-Basically a quick way to do [this](https://blog.fluent-forever.com/simple-word-flashcards/) step in the FF method.
+Basically a quick way to do [the vocab step](https://blog.fluent-forever.com/simple-word-flashcards/) step in the FF method.
 
 Decreases card creation time from 6+ minutes to 30 seconds.
 
@@ -26,7 +26,7 @@ Gathers the following info:
 
 - `pip install -r requirements.txt`
 - ffmpeg installed and added to system PATH
-- [Model deck](http://www.fluent-forever.com/wp-content/uploads/2014/05/Model-Deck-May-2014.apkg) from FF imported
+- [Model deck](http://www.fluent-forever.com/wp-content/uploads/2014/05/Model-Deck-May-2014.apkg) from FF imported into Anki
   - This program only creates the "2. Picture Words" note type at the moment
     - Will generate the spelling (optional), production, and comprehension cards automatically
 - [AnkiConnect add-on](https://foosoft.net/projects/anki-connect/) (code 2055492159)
@@ -35,7 +35,7 @@ Gathers the following info:
 
 ## Usage
 
-1. `python gui.py`
+1. `python app.py`
 2. Enter word to search
 3. Select destination deck
 4. Search
@@ -47,6 +47,7 @@ Gathers the following info:
 
 ## Todo
 
+- Dynamic languages; no French hard-coding
 - Custom images
   - Ideally drag/drop
 - More recordings from Forvo, maybe
