@@ -4,11 +4,12 @@ import html
 
 import requests
 
+import config as cfg
+
 
 class AnkiConnect:
     URL = "http://localhost:8765/"
     VERSION = 6
-    MODEL_NAME = "2. Picture Words"
 
     def invoke(self, action, params=None):
         payload = {"action": action, "version": self.VERSION}
@@ -71,7 +72,7 @@ class AnkiConnect:
         params = {
             "note": {
                 "deckName": deck_name,
-                "modelName": self.MODEL_NAME,
+                "modelName": cfg.SIMPLE_WORDS_NOTE_TYPE,
                 "fields": {
                     "Word": word,
                     "Picture": picture_field,

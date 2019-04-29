@@ -4,9 +4,9 @@ from tkinter import *
 from PIL import ImageTk, Image
 from google_images_download import google_images_download
 
+import config as cfg
+
 cwd = os.getcwd()
-MAX_SAVE_SIZE = (400, 400)
-THUMBNAIL_SIZE = (200, 200)
 
 
 class VerticalScrolledFrame(Frame):
@@ -66,9 +66,9 @@ class Gallery(VerticalScrolledFrame):
 
         paths = response.download({
             "keywords": self.query,
-            "language": "French",
+            "language": cfg.GOOGLE_IMAGES_LANGUAGE,
             "output_directory": "temp",
-            "limit": 5
+            "limit": cfg.NUM_GOOGLE_IMAGES
         })
 
         for path in paths[self.query]:
@@ -78,7 +78,7 @@ class Gallery(VerticalScrolledFrame):
             save_filename = filename + ".save" + ext
             image_to_save = Image.open(path)
             image_to_save = image_to_save.convert("RGB")
-            image_to_save.thumbnail(MAX_SAVE_SIZE, Image.ANTIALIAS)
+            image_to_save.thumbnail(cfg.MAX_IMAGE_SIZE, Image.ANTIALIAS)
             image_to_save.save(save_filename)
 
         return paths[self.query]
@@ -100,7 +100,7 @@ class Gallery(VerticalScrolledFrame):
             thumb_filename = filename + ".thumb" + ext
             thumbnail_img = Image.open(path)
             thumbnail_img = thumbnail_img.convert("RGB")
-            thumbnail_img.thumbnail(THUMBNAIL_SIZE, Image.ANTIALIAS)
+            thumbnail_img.thumbnail(cfg.THUMBNAIL_SIZE, Image.ANTIALIAS)
             thumbnail_img.save(thumb_filename)
             thumbs.append(thumb_filename)
         return thumbs

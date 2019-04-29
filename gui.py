@@ -8,8 +8,7 @@ from playsound import playsound
 import gallery
 import wiktionary
 from anki_connect import AnkiConnect
-
-TEMP_DIR = "temp"
+import config as cfg
 
 root = tk.Tk()
 
@@ -46,14 +45,14 @@ class Application(tk.Frame):
         self.reset_button.pack()
 
     def reset(self):
-        keep = [
+        widgets_to_keep = [
             self.reset_button,
             self.search_button,
             self.query_entry,
             self.deck_names_combo
         ]
         for widget in self.winfo_children():
-            if widget not in keep:
+            if widget not in widgets_to_keep:
                 widget.destroy()
         self.query.set("")
 
@@ -129,17 +128,17 @@ class Application(tk.Frame):
             self.result_label.pack()
 
     def create_notes_area(self):
-        self.notes = tk.Text(self, height=2, width= 60)
+        self.notes = tk.Text(self, height=2, width=30)
         self.notes.pack()
 
 
 def setup_temp_dir():
-    if not os.path.exists(TEMP_DIR):
-        os.makedirs(os.path.join(os.getcwd(), TEMP_DIR))
+    if not os.path.exists(cfg.TEMP_DIR):
+        os.makedirs(os.path.join(os.getcwd(), cfg.TEMP_DIR))
 
 
 def remove_temp_files():
-    for r, dirs, files in os.walk(os.path.join(cwd, TEMP_DIR), topdown=False):
+    for r, dirs, files in os.walk(os.path.join(cwd, cfg.TEMP_DIR), topdown=False):
         for name in files:
             os.remove(os.path.join(r, name))
         for name in dirs:
