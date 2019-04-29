@@ -1,6 +1,6 @@
 import os
-from tkinter import *
-from tkinter.ttk import *
+import tkinter as tk
+from tkinter import ttk
 
 from pydub import AudioSegment
 from playsound import playsound
@@ -11,14 +11,14 @@ from anki_connect import AnkiConnect
 
 TEMP_DIR = "temp"
 
-root = Tk()
+root = tk.Tk()
 
 cwd = os.getcwd()
 
 ac = AnkiConnect()
 
 
-class Application(Frame):
+class Application(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
         remove_temp_files()
@@ -27,22 +27,22 @@ class Application(Frame):
         self.create_widgets()
 
     def create_deck_names_combo(self):
-        self.deck_name_decision = StringVar()
+        self.deck_name_decision = tk.StringVar()
         self.deck_names = ac.get_deck_names()
-        self.deck_names_combo = Combobox(self, textvariable=self.deck_name_decision, values=self.deck_names)
+        self.deck_names_combo = ttk.Combobox(self, textvariable=self.deck_name_decision, values=self.deck_names)
         self.deck_names_combo.pack()
 
     def create_query_entry(self):
-        self.query = StringVar()
-        self.query_entry = Entry(self.parent, textvariable=self.query, name="search", text="Word:")
+        self.query = tk.StringVar()
+        self.query_entry = ttk.Entry(self.parent, textvariable=self.query, name="search", text="Word:")
         self.query_entry.pack()
 
     def create_search_button(self):
-        self.search_button = Button(self)
+        self.search_button = ttk.Button(self)
         self.search_button["text"] = "Search"
         self.search_button["command"] = self.search
         self.search_button.pack(side="top")
-        self.reset_button = Button(self, text="Reset", command=self.reset, name="reset")
+        self.reset_button = ttk.Button(self, text="Reset", command=self.reset, name="reset")
         self.reset_button.pack()
 
     def reset(self):
@@ -75,7 +75,7 @@ class Application(Frame):
         self.create_definition_choices_combo(search_result["definitions"])
 
         self.audio_filename = search_result["audio_filename"]
-        self.sound_button = Button(self, text="Play Pronunciation", command=self.play_pronunciation).pack()
+        self.sound_button = ttk.Button(self, text="Play Pronunciation", command=self.play_pronunciation).pack()
 
         self.create_image_gallery(query)
         self.create_notes_area()
@@ -83,13 +83,16 @@ class Application(Frame):
         self.create_submit_button()
 
     def create_ipa_label(self):
-        self.ipa_label = Label(self, text="IPA:").pack()
-        ipa_text_var = StringVar(value=self.ipa_text)
-        self.ipa_field = Entry(self, textvariable=ipa_text_var).pack()
+        self.ipa_label = ttk.Label(self, text="IPA:")
+        self.ipa_label.pack()
+        self.ipa_text_var = tk.StringVar()
+        self.ipa_field = ttk.Entry(self, textvariable=self.ipa_text_var)
+        self.ipa_text_var.set(self.ipa_text)
+        self.ipa_field.pack()
 
     def create_definition_choices_combo(self, choices):
-        self.definition_decision = StringVar()
-        self.definition_combo = Combobox(self, textvariable=self.definition_decision, values=choices)
+        self.definition_decision = tk.StringVar()
+        self.definition_combo = ttk.Combobox(self, textvariable=self.definition_decision, values=choices)
         self.definition_combo.set(choices[0])
         self.definition_combo.pack()
 
@@ -97,8 +100,8 @@ class Application(Frame):
         self.gallery = gallery.Gallery(self, query)
 
     def create_test_spelling_checkbox(self):
-        self.test_spelling = BooleanVar()
-        self.test_spelling_cb = Checkbutton(self, text="Test Spelling?", variable=self.test_spelling)
+        self.test_spelling = tk.BooleanVar()
+        self.test_spelling_cb = ttk.Checkbutton(self, text="Test Spelling?", variable=self.test_spelling)
         self.test_spelling.set(False)
         self.test_spelling_cb.pack()
 
@@ -106,37 +109,27 @@ class Application(Frame):
         if hasattr(self, "result_label"):
             self.result_label.destroy()
         query = self.query_entry.get()
-        self.search_progress_bar = Progressbar(self, orient=HORIZONTAL, mode="indeterminate")
-        self.search_progress_bar.pack()
-        self.search_progress_bar.start()
         search_result = wiktionary.search(query)
         self.create_search_result_widgets(query, search_result)
-        self.search_progress_bar.stop()
-        self.after(500, self.search_progress_bar.destroy)
 
     def create_submit_button(self):
-        self.submit_button = Button(self, text="Submit", command=self.submit).pack()
+        self.submit_button = ttk.Button(self, text="Submit", command=self.submit).pack()
 
     def submit(self):
-        self.submit_progress_bar = Progressbar(self, orient=HORIZONTAL, mode="indeterminate")
-        self.submit_progress_bar.pack()
-        self.submit_progress_bar.start()
         word = self.query_entry.get()
         deck_name = self.deck_name_decision.get()
         selected_images = self.gallery.get_selected()
         gender = self.definition_decision.get()
-        notes = self.notes.get("1.0", END)
+        notes = self.notes.get("1.0", tk.END)
         test_spelling = self.test_spelling.get()
         result = ac.add_note(deck_name, word, selected_images, gender, notes, self.audio_filename, self.ipa_text, test_spelling)
-        self.submit_progress_bar.stop()
-        self.after(200, self.submit_progress_bar.destroy)
         if result:
             self.reset()
-            self.result_label = Label(self, text="Added!")
+            self.result_label = tk.Label(self, text="Added!")
             self.result_label.pack()
 
     def create_notes_area(self):
-        self.notes = Text(self, height=2, width= 60)
+        self.notes = tk.Text(self, height=2, width= 60)
         self.notes.pack()
 
 
