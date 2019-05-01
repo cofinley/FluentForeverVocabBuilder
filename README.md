@@ -26,7 +26,7 @@ Gathers the following info:
 
 - Python 3
 - `pip install -r requirements.txt`
-- ffmpeg installed and added to system PATH
+- ffmpeg installed and added to system PATH (for previewing pronunciation audio)
 - [Model deck](http://www.fluent-forever.com/wp-content/uploads/2014/05/Model-Deck-May-2014.apkg) from FF imported into Anki
   - This program only creates the "2. Picture Words" note type at the moment
     - Will generate the spelling (optional), production, and comprehension cards automatically
