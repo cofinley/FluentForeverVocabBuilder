@@ -24,6 +24,7 @@ Gathers the following info:
 
 ## Requirements
 
+- Python 3
 - `pip install -r requirements.txt`
 - ffmpeg installed and added to system PATH
 - [Model deck](http://www.fluent-forever.com/wp-content/uploads/2014/05/Model-Deck-May-2014.apkg) from FF imported into Anki
@@ -38,12 +39,20 @@ Gathers the following info:
 1. `python app.py`
 2. Enter word to search
 3. Select destination deck
-4. Search
+4. Search (takes time to download images)
 5. Tweak any values
 6. Select pic(s)
 7. Enter any notes you want
-8. Submit
+8. Submit (takes time to store everything into Anki)
 9. Repeat
+
+## Known Issues
+
+- The Google Images scraper library will pull images with weird extensions
+  - Results in no images shown
+- Phrases are not supported; currently used for single words that you could find in Wiktionary
+- Clicking on Search or Submit buttons semi-freeze the app while it uses the network
+  - The fix will require multithreading for background tasks
 
 ## Todo
 
