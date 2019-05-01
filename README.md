@@ -17,9 +17,9 @@ Gathers the following info:
 ## Rationale
 
 - Because the app is in disarray right now (v1.0.0, April 2019) and review sessions are a pain.
-    - Occurs on review, repeats words over and over
+    - Words are repeated over and over, sometimes endlessly
 - I found I like having editable notes that I have full control over.
-- App is still worth it ($10/mo) with content, grammar difficulty levels, and hopes of tutors, but other than that, Anki is much more mature. 
+- App is still worth it ($10/mo) for its premade content, grammar difficulty levels, and hopes of tutors. But other than that, Anki is much more mature. 
 - We can also use Google Images here over Bing b/c of small scale.
 
 ## Requirements
@@ -56,6 +56,7 @@ Gathers the following info:
 
 ## Todo
 
+- Labels because I'm lost
 - Dynamic languages; no French hard-coding
 - Custom images
   - Ideally drag/drop
@@ -64,4 +65,4 @@ Gathers the following info:
 - Less main GUI thread blocking on network requests
   - And progress bars
 - Config
-- Other note types in the model deck (i.e. grammar)
+- Other note types in the model deck (i.e. grammar, minimal pairs)
