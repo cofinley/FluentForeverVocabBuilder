@@ -24,31 +24,10 @@ def search(query):
     ipa = pronunciation["text"][0].replace("IPA: ", "")
     audio_url = "https:" + pronunciation["audio"][0]
     audio_filename = download_audio(audio_url).name
-    definition_choices = query["definitions"]
-    formatted_choices = get_formatted_definition_choices(definition_choices)
+    definition_choices = [(d["partOfSpeech"], d["text"][0]) for d in query["definitions"]]
     return {
         "ipa": ipa,
         "audio_filename": audio_filename,
-        "definitions": formatted_choices
+        "definitions": definition_choices
     }
 
-
-def get_formatted_definition_choices(definition_choices):
-    choices = []
-    for i in definition_choices:
-        text = i["text"][0]
-        gender_match = re.search(r"(.*)\s(\w)\s\(.*", text)
-        if gender_match:
-            word = gender_match[1]
-            gender_letter = gender_match[2]
-            if gender_letter == "m":
-                gender = "le "
-            else:
-                gender = "la "
-            result = gender + word
-            if word.startswith(("a", "e", "i", "o", "u")):
-                result += " -> l'" + word
-            choices.append(result)
-        else:
-            choices.append(text)
-    return choices

@@ -56,13 +56,14 @@ Gathers the following info:
 
 ## Todo
 
-- Labels because I'm lost
-- Dynamic languages; no French hard-coding
-- Custom images
+- [x] Labels because I'm lost
+- [x] Dynamic languages; no French hard-coding
+  - See `config.py`
+- [x] Config
+- [ ] Custom images
   - Ideally drag/drop
-- More recordings from Forvo, maybe
-- Better layout, padding
-- Less main GUI thread blocking on network requests
-  - And progress bars
-- Config
-- Other note types in the model deck (i.e. grammar, minimal pairs)
+- [ ] More recordings from Forvo, maybe
+- [ ] Better layout, padding
+- [ ] Less main GUI thread blocking on network requests
+  - [ ] And progress bars
+- [ ] Other note types in the model deck (i.e. grammar, minimal pairs)

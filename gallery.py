@@ -68,7 +68,8 @@ class Gallery(VerticalScrolledFrame):
             "keywords": self.query,
             "language": cfg.GOOGLE_IMAGES_LANGUAGE,
             "output_directory": "temp",
-            "limit": cfg.NUM_GOOGLE_IMAGES
+            "limit": cfg.NUM_GOOGLE_IMAGES,
+            "format": "jpg"
         })
 
         for path in paths[self.query]:
@@ -77,9 +78,8 @@ class Gallery(VerticalScrolledFrame):
 
             save_filename = filename + ".save" + ext
             image_to_save = Image.open(path)
-            image_to_save = image_to_save.convert("RGB")
             image_to_save.thumbnail(cfg.MAX_IMAGE_SIZE, Image.ANTIALIAS)
-            image_to_save.save(save_filename)
+            image_to_save.save(save_filename, format=image_to_save.format)
 
         return paths[self.query]
 
@@ -99,9 +99,8 @@ class Gallery(VerticalScrolledFrame):
 
             thumb_filename = filename + ".thumb" + ext
             thumbnail_img = Image.open(path)
-            thumbnail_img = thumbnail_img.convert("RGB")
             thumbnail_img.thumbnail(cfg.THUMBNAIL_SIZE, Image.ANTIALIAS)
-            thumbnail_img.save(thumb_filename)
+            thumbnail_img.save(thumb_filename, format=thumbnail_img.format)
             thumbs.append(thumb_filename)
         return thumbs
 
