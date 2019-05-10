@@ -48,9 +48,8 @@ Gathers the following info:
 
 ## Known Issues
 
-- The Google Images scraper library will pull images with weird extensions
-  - Results in no images shown
 - Phrases are not supported; currently used for single words that you could find in Wiktionary
+  - Can still use program, just no IPA, audio, or definition choices if Wiktionary doesn't have it.
 - Clicking on Search or Submit buttons semi-freeze the app while it uses the network
   - The fix will require multithreading for background tasks
 
