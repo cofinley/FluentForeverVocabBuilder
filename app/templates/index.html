@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Fluent Forever Helper</title>
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<div class="container">
+    <h1>Fluent Forever Vocab Builder</h1>
+
+    <form>
+        <div class="form-group">
+            <label for="deck-select">Anki Deck</label>
+            <select class="form-control" id="deck-select">
+                {% for deck in decks %}
+                <option>{{ deck }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="query">Word</label>
+            <input type="text" class="form-control" id="query" placeholder="i.e. chien">
+        </div>
+        <button type="button" class="btn btn-secondary">Reset</button>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
+</body>
+</html>

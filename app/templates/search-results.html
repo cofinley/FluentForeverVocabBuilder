@@ -1,0 +1,30 @@
+<form>
+    <div class="form-group">
+        <label for="ipa">IPA</label>
+        <input type="text" class="form-control" id="ipa" value="{{ ipa_text }}">
+    </div>
+
+    <button type="button" class="btn btn-info {% if not has_audio %}disabled{% endif %}">Play Pronunciation</button>
+
+    <div class="form-group">
+        <label for="definition-select">Definitions</label>
+        <select class="form-control" id="definition-select">
+            {% for definition in definitions %}
+            <option>{{ definition }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div id="image-gallery">
+        {% for image in images %}
+        <img src="{{ image }}">
+        {% endfor %}
+    </div>
+
+    <div class="form-group">
+        <label for="notes-area">Additional Notes</label>
+        <textarea class="form-control" id="notes-area" rows="3"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
