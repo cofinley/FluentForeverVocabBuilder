@@ -1,0 +1,16 @@
+.gallery img {
+    max-height: 150px;
+    margin: 5px;
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+    user-select: none;          /* Likely future */
+
+    -webkit-user-drag: none; /* Prevents dragging of images/divs etc */
+    -moz-user-drag: none;     /* Firefox all */
+    user-drag: none;
+}
+
+.img-selected {
+    border: 2px solid var(--blue);
+}

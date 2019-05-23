@@ -1,30 +1,18 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <title>Fluent Forever Helper</title>
-    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-</head>
-<body>
-<div class="container">
-    <h1>Fluent Forever Vocab Builder</h1>
+{% extends "base.html" %}
+{% from "bootstrap/form.html" import render_form, render_field, render_form_row %}
 
-    <form>
-        <div class="form-group">
-            <label for="deck-select">Anki Deck</label>
-            <select class="form-control" id="deck-select">
-                {% for deck in decks %}
-                <option>{{ deck }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="query">Word</label>
-            <input type="text" class="form-control" id="query" placeholder="i.e. chien">
-        </div>
-        <button type="button" class="btn btn-secondary">Reset</button>
-        <button type="submit" class="btn btn-primary">Search</button>
-    </form>
+{% block content %}
+<div class="alert alert-success d-none" role="alert">
+    Added to Anki!
 </div>
-</body>
-</html>
+<form class="search-form" action="" method="post" novalidate>
+    {{ form.csrf_token }}
+    {{ render_field(form.word) }}
+    {{ render_field(form.decks) }}
+    <button type="button" class="btn btn-secondary">Reset</button>
+    <button class="btn btn-primary" id="search-submit" name="search-submit" type="button" value="Submit" onclick="search()">
+        Search
+        <span class="spinner-border spinner-border-sm search-spinner d-none" role="status" aria-hidden="true"></span>
+    </button>
+</form>
+{% endblock %}

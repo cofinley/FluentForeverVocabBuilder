@@ -1,9 +1,16 @@
 beautifulsoup4==4.7.1
+Bootstrap-Flask==1.0.10
 certifi==2019.3.9
 chardet==3.0.4
+Click==7.0
+Flask==1.0.2
+Flask-WTF==0.14.2
 future==0.17.1
 google-images-download==2.5.0
 idna==2.8
+itsdangerous==1.1.0
+Jinja2==2.10.1
+MarkupSafe==1.1.1
 Pillow==6.0.0
 playsound==1.2.2
 pydub==0.23.1
@@ -11,4 +18,6 @@ requests==2.21.0
 selenium==3.141.0
 soupsieve==1.9.1
 urllib3==1.24.2
+Werkzeug==0.15.2
 wiktionaryparser==0.0.97
+WTForms==2.2.1

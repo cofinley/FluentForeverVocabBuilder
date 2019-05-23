@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Fluent Forever Helper</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/bootstrap-dark.css") }}" type="text/css">
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}" type="text/css">
+</head>
+<body>
+<div class="container">
+    <h1>Fluent Forever Vocab Builder</h1>
+    {% block content %}{% endblock %}
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" defer></script>
+<script src="{{ url_for('static', filename='js/index.js') }}" defer></script>
+</body>
+</html>

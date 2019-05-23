@@ -1,17 +1,17 @@
 import tempfile
 from urllib.request import urlopen
 import os
-import re
 
 from wiktionaryparser import WiktionaryParser
 
-import config as cfg
+from app import app
+cfg = app.config
 
 parser = WiktionaryParser()
 
 
 def download_audio(url):
-    temp_dir = os.path.join(os.getcwd(), cfg.TEMP_DIR)
+    temp_dir = os.path.join(os.getcwd(), cfg["TEMP_DIR"])
     data = urlopen(url).read()
     with tempfile.NamedTemporaryFile(mode="wb", delete=False, suffix=".ogg", dir=temp_dir) as f:
         f.write(data)
@@ -19,7 +19,7 @@ def download_audio(url):
 
 
 def search(query):
-    query = parser.fetch(query, cfg.WIKTIONARY_LANGUAGE)[0]
+    query = parser.fetch(query, cfg["WIKTIONARY_LANGUAGE"])[0]
     pronunciation = query["pronunciations"]
     ipa = pronunciation["text"][0].replace("IPA: ", "")
     audio_url = "https:" + pronunciation["audio"][0]

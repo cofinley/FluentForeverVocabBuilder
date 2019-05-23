@@ -4,7 +4,9 @@ import html
 
 import requests
 
-import config as cfg
+from app import app
+
+cfg = app.config
 
 
 class AnkiConnect:
@@ -50,7 +52,7 @@ class AnkiConnect:
         html_notes = "<br>".join(html.escape(notes.strip()).split("\n"))
         return "<div>{}</div>".format(html_notes)
 
-    def add_note(self, deck_name, word, image_paths, gender, notes, recording_file_path, ipa_text, test_spelling):
+    def add_note(self, deck_name, word, image_paths, word_usage, notes, recording_file_path, ipa_text, test_spelling):
         stored_images = []
         for i, image_path in enumerate(image_paths):
             stored_images.append(self.store_media_file(image_path, "{}-{}".format(word, i)))
@@ -59,7 +61,7 @@ class AnkiConnect:
         for stored_image in stored_images:
             picture_field += '<img src="{}">'.format(stored_image)
 
-        escaped_gender_text = html.escape(gender)
+        escaped_gender_text = html.escape(word_usage)
         formatted_notes = self.format_notes(notes)
         gender_notes_field = escaped_gender_text + formatted_notes
 
@@ -72,7 +74,7 @@ class AnkiConnect:
         params = {
             "note": {
                 "deckName": deck_name,
-                "modelName": cfg.SIMPLE_WORDS_NOTE_TYPE,
+                "modelName": cfg["SIMPLE_WORDS_NOTE_TYPE"],
                 "fields": {
                     "Word": word,
                     "Picture": picture_field,

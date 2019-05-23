@@ -1,7 +1,7 @@
 # Fluent Forever Vocab Builder
 
-This is a tkinter program that searches and scrapes info for a vocab word and builds a card for your anki deck, based off the FF model deck.
-- Tkinter because Anki add-ons are not well documented and this separates concerns a bit.
+This is a web app that searches and scrapes info for a vocab word and builds a card for your anki deck, based off the FF model deck.
+- Web app because Anki add-ons are not well documented and this separates concerns a bit. Was tkinter but it's not great to work with long-term.
 
 Basically a quick way to do [the vocab step](https://blog.fluent-forever.com/simple-word-flashcards/) step in the FF method.
 
@@ -62,7 +62,7 @@ Gathers the following info:
 - [ ] Custom images
   - Ideally drag/drop
 - [ ] More recordings from Forvo, maybe
-- [ ] Better layout, padding
-- [ ] Less main GUI thread blocking on network requests
+- [x] Better layout, padding
+- [x] Less main GUI thread blocking on network requests
   - [ ] And progress bars
 - [ ] Other note types in the model deck (i.e. grammar, minimal pairs)
