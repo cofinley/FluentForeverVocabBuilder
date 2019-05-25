@@ -4,6 +4,7 @@ from wtforms.validators import DataRequired
 
 
 class SearchForm(FlaskForm):
+    language = SelectField("Language", validators=[DataRequired()])
     word = StringField("Word", validators=[DataRequired()])
     decks = SelectField("Deck", validators=[DataRequired()])
     submit = SubmitField("Submit")

@@ -1,3 +1,7 @@
+.alert {
+    display: none;
+}
+
 .form-control {
     width: 50%;
 }

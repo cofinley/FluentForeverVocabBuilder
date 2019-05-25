@@ -18,8 +18,9 @@ def download_audio(url):
         return f
 
 
-def search(query):
-    query = parser.fetch(query, cfg["WIKTIONARY_LANGUAGE"])[0]
+def search(query, language):
+    parser.set_default_language(language)
+    query = parser.fetch(query)[0]
     pronunciation = query["pronunciations"]
     if len(pronunciation["text"]):
         ipa = pronunciation["text"][0].replace("IPA: ", "")

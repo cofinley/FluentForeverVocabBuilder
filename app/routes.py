@@ -12,11 +12,12 @@ ac = anki_connect.AnkiConnect()
 save_path_pat = r".*(temp.*)"
 
 
-@app.route('/', methods=["GET", "POST"])
+@app.route('/')
 def index():
     decks = ac.get_deck_names()
     form = forms.SearchForm()
     form.decks.choices = [(i, i) for i in decks]
+    form.language.choices = [(l, l) for l in app.config["AVAILABLE_LANGUAGES"]]
     return render_template("index.html", decks=decks, form=form)
 
 
@@ -25,7 +26,8 @@ def search():
     req = request.args
     word = req.get("word_query")
     deck_name = req.get("deck_name")
-    search_result = wiktionary.search(word)
+    language = req.get("language")
+    search_result = wiktionary.search(word, language)
     form = forms.AnkiForm()
     form.ipa.data = search_result.get("ipa") or ""
     combo_choices = ["{}: {}".format(c[0], c[1]) for c in search_result.get("definitions")]
@@ -56,8 +58,8 @@ def add():
     word_usage = args.get("word_usage")
     audio_filename = os.path.join(app.root_path, args.get("audio_filename"))
     json_image_paths = args.get("image_paths")
-    final_image_paths = images.format_json_image_paths(json_image_paths)
-    thumbnail_image_paths = list(map(images.generate_thumbnail, final_image_paths))
+    image_paths = images.format_json_image_paths(json_image_paths)
+    thumbnail_image_paths = list(map(images.generate_thumbnail, image_paths))
     notes = args.get("notes")
     test_spelling = args.get("test_spelling") or ""
     ac.add_note(deck_name=deck,

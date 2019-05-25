@@ -7,8 +7,9 @@
 </div>
 <form class="search-form" novalidate>
     {{ form.csrf_token }}
-    {{ render_field(form.word) }}
+    {{ render_field(form.language) }}
     {{ render_field(form.decks) }}
+    {{ render_field(form.word) }}
     <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset</button>
     <button class="btn btn-primary" id="search-submit" name="search-submit" type="button" value="Submit" onclick="search()">
         Search

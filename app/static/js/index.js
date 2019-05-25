@@ -3,15 +3,42 @@ function resetForm() {
     $(".add-form").remove();
 }
 
+function getDefaults() {
+    if (null !== window.localStorage.getItem("language")) {
+        return {
+            language: window.localStorage.getItem("language"),
+            deck: window.localStorage.getItem("deck")
+        }
+    }
+    return false;
+}
+
+
+function setDefaults(language, deck) {
+    window.localStorage.setItem("language", language);
+    window.localStorage.setItem("deck", deck);
+}
+
+function populateDefaults() {
+    const defaults = getDefaults();
+    if (defaults) {
+        $("select#decks").val(defaults.deck);
+        $("select#language").val(defaults.language);
+    }
+}
+
 function search() {
     $(".add-form").remove();
     const word_query = $("input#word").val();
-    const deck_name = $("input#decks").val();
+    const deck_name = $("select#decks").val();
+    const language = $("select#language").val();
+    setDefaults(language, deck_name);
     $(".search-spinner").removeClass("d-none");
     $.get("/search",
         {
             word_query: word_query,
-            deck_name: deck_name
+            deck_name: deck_name,
+            language: language
         },
         function (data) {
             $(".container").append(data);
@@ -66,9 +93,9 @@ function add() {
         $(".add-spinner").addClass("d-none");
         $(".add-form").remove();
         $("input#word").val("").focus();
-        $(".alert-success").removeClass("d-none");
+        $(".alert-success").slideDown();
         setTimeout(function() {
-            $(".alert-success").addClass("d-none");
+            $(".alert-success").slideUp();
         }, 2000);
     });
 }
@@ -103,6 +130,7 @@ function enterWatch() {
 }
 
 $(document).ready(function() {
-   imgWatch();
-   enterWatch();
+    populateDefaults();
+    imgWatch();
+    enterWatch();
 });

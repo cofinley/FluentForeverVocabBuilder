@@ -37,12 +37,16 @@ Gathers the following info:
 
 ## Usage
 
+1. Open Anki
 1. For Windows, `set FLASK_APP=ff.py`
-  - For Linux/Mac, `export FLASK_APP=ff.py`
+    - For Linux/Mac, `export FLASK_APP=ff.py`
 1. `flask run`
-1. Go to "127.0.0.1:5000" in your browser
-1. Enter word to search
+1. Go to 127.0.0.1:5000 in your browser
+1. Select language
+   - This is saved in the browser
 1. Select destination deck
+   - Also saved in the browser
+1. Enter word to search
 1. Search (takes time to download images)
 1. Tweak any values
 1. Select pic(s)
@@ -66,5 +70,5 @@ Gathers the following info:
 - [ ] More recordings from Forvo, maybe
 - [x] Better layout, padding
 - [x] Less main GUI thread blocking on network requests
-  - [ ] And progress bars
+  - [ ] ~~And progress bars~~
 - [ ] Other note types in the model deck (i.e. grammar, minimal pairs)
