@@ -61,7 +61,7 @@ class AnkiConnect:
         for stored_image in stored_images:
             picture_field += '<img src="{}">'.format(stored_image)
 
-        escaped_gender_text = html.escape(word_usage)
+        escaped_gender_text = html.escape(word_usage.replace("&", "&amp;"))
         formatted_notes = self.format_notes(notes)
         gender_notes_field = escaped_gender_text + formatted_notes
 

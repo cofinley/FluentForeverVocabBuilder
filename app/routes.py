@@ -4,8 +4,8 @@ import json
 
 from flask import render_template, request, jsonify, send_from_directory
 
-from app import app, anki_connect, forms
-from app.service import wiktionary, images
+from app import app, forms
+from app.service import wiktionary, images, anki_connect
 
 
 ac = anki_connect.AnkiConnect()
@@ -31,7 +31,10 @@ def search():
     combo_choices = ["{}: {}".format(c[0], c[1]) for c in search_result.get("definitions")]
     form.word_usage.choices = [(i, i) for i in combo_choices]
     audio_filename = search_result.get("audio_filename")
-    audio_relative_filename = re.findall(save_path_pat, audio_filename)[0].replace(os.sep, '/')
+    if audio_filename:
+        audio_relative_filename = re.findall(save_path_pat, audio_filename)[0].replace(os.sep, '/')
+    else:
+        audio_relative_filename = None
     form.image_query.data = word
 
     return render_template("search-results.html", word=word, deck=deck_name, form=form, audio_filename=audio_relative_filename)
@@ -53,12 +56,13 @@ def add():
     word_usage = args.get("word_usage")
     audio_filename = os.path.join(app.root_path, args.get("audio_filename"))
     json_image_paths = args.get("image_paths")
-    final_image_paths = map(images.format_json_image_paths, json_image_paths)
+    final_image_paths = images.format_json_image_paths(json_image_paths)
+    thumbnail_image_paths = list(map(images.generate_thumbnail, final_image_paths))
     notes = args.get("notes")
     test_spelling = args.get("test_spelling") or ""
     ac.add_note(deck_name=deck,
                 word=word,
-                image_paths=final_image_paths,
+                image_paths=thumbnail_image_paths,
                 word_usage=word_usage,
                 notes=notes,
                 recording_file_path=audio_filename,

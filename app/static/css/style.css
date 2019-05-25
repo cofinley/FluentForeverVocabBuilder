@@ -1,4 +1,13 @@
-.gallery img {
+.form-control {
+    width: 50%;
+}
+
+.img-search-pane {
+    height: 600px;
+    margin: 20px 0 50px;
+}
+
+img {
     max-height: 150px;
     margin: 5px;
     -webkit-user-select: none;  /* Chrome all / Safari all */
@@ -12,5 +21,11 @@
 }
 
 .img-selected {
-    border: 2px solid var(--blue);
+    border: 3px solid var(--green);
+}
+
+.gallery,
+.gallery-selected {
+    height: 100%;
+    overflow-y: scroll;
 }

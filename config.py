@@ -8,5 +8,4 @@ class Config(object):
     NUM_GOOGLE_IMAGES = 5
     TEMP_DIR = os.path.join(os.getcwd(), "app", "temp")
     MAX_IMAGE_SIZE = (400, 400)
-    THUMBNAIL_SIZE = (200, 200)
     SIMPLE_WORDS_NOTE_TYPE = "2. Picture Words"

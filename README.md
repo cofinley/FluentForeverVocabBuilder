@@ -18,6 +18,7 @@ Gathers the following info:
 
 - Because the app is in disarray right now (v1.0.0, April 2019) and review sessions are a pain.
     - Words are repeated over and over, sometimes endlessly
+    - Update, May 2019: Bugs are fixed, but I think I like this better anyway.
 - I found I like having editable notes that I have full control over.
 - App is maybe worth it ($10/mo) for its pre-made content, grammar difficulty levels, and hopes of tutors. But other than that, Anki is much more mature and flexible. 
 - We can also use Google Images here over Bing b/c of small scale.
@@ -31,27 +32,28 @@ Gathers the following info:
   - This program only creates the "2. Picture Words" note type at the moment
     - Will generate the spelling (optional), production, and comprehension cards automatically
 - [AnkiConnect add-on](https://foosoft.net/projects/anki-connect/) (code 2055492159)
-- Anki needs to be open
+- Anki needs to be open before starting the app
 
 
 ## Usage
 
-1. `python app.py`
-2. Enter word to search
-3. Select destination deck
-4. Search (takes time to download images)
-5. Tweak any values
-6. Select pic(s)
-7. Enter any notes you want
-8. Submit (takes time to store everything into Anki)
-9. Repeat
+1. For Windows, `set FLASK_APP=ff.py`
+  - For Linux/Mac, `export FLASK_APP=ff.py`
+1. `flask run`
+1. Go to "127.0.0.1:5000" in your browser
+1. Enter word to search
+1. Select destination deck
+1. Search (takes time to download images)
+1. Tweak any values
+1. Select pic(s)
+1. Enter any notes you want
+1. Submit (takes time to store everything into Anki)
+1. Repeat
 
 ## Known Issues
 
 - Phrases are not supported; currently used for single words that you could find in Wiktionary
   - Can still use program, just no IPA, audio, or definition choices if Wiktionary doesn't have it.
-- Clicking on Search or Submit buttons semi-freeze the app while it uses the network
-  - The fix will require multithreading for background tasks
 
 ## Todo
 

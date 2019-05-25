@@ -1,18 +1,30 @@
 {% from "bootstrap/form.html" import render_form, render_field, render_form_row %}
 
-<form class="add-form mt-4" action="" method="POST" novalidate>
+<form class="add-form mt-4">
     {{ form.csrf_token }}
     {{ render_field(form.ipa) }}
-    <button type="button" class="btn btn-info btn-audio {% if not audio_filename %}disabled{% endif %}" onclick="playSound(this)" data-audio="{{ audio_filename }}">Play Pronunciation</button>
+    <button type="button" class="btn btn-info btn-audio mb-2 {% if not audio_filename %}disabled{% endif %}" onclick="playSound(this)" data-audio="{{ audio_filename }}">Play Pronunciation</button>
     {{ render_field(form.word_usage) }}
-    {{ render_field(form.image_query) }}
-    <button class="btn btn-outline-success" type="button" onclick="searchImages()">
-        Search Images
-        <span class="spinner-border spinner-border-sm image-search-spinner d-none" role="status" aria-hidden="true"></span>
-    </button>
-    <div class="gallery">
-        <div class="spinner-border" role="status">
-          <span class="sr-only">Getting images...</span>
+    <label class="form-control-label" for="image_query">{{ form.image_query.label }}</label>
+    <div class="d-flex">
+        <input type="text" class="form-control w-25" id="image_query" name="image_query" value="{{ form.image_query.data }}">
+        <button class="btn btn-outline-success ml-2" type="button" onclick="searchImages()">
+            Search Images
+            <span class="spinner-border spinner-border-sm image-search-spinner d-none" role="status" aria-hidden="true"></span>
+        </button>
+    </div>
+    <div class="row img-search-pane">
+        <div class="col">
+            <div class="gallery">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Getting images...</span>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="border rounded gallery-selected">
+                <p>Selected Images</p>
+            </div>
         </div>
     </div>
     {{ render_field(form.notes) }}

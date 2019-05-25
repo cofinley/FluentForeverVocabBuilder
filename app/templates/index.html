@@ -5,11 +5,11 @@
 <div class="alert alert-success d-none" role="alert">
     Added to Anki!
 </div>
-<form class="search-form" action="" method="post" novalidate>
+<form class="search-form" novalidate>
     {{ form.csrf_token }}
     {{ render_field(form.word) }}
     {{ render_field(form.decks) }}
-    <button type="button" class="btn btn-secondary">Reset</button>
+    <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset</button>
     <button class="btn btn-primary" id="search-submit" name="search-submit" type="button" value="Submit" onclick="search()">
         Search
         <span class="spinner-border spinner-border-sm search-spinner d-none" role="status" aria-hidden="true"></span>

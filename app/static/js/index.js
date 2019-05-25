@@ -1,3 +1,8 @@
+function resetForm() {
+    $("input#word").val("");
+    $(".add-form").remove();
+}
+
 function search() {
     $(".add-form").remove();
     const word_query = $("input#word").val();
@@ -50,6 +55,9 @@ function add() {
         return obj;
     }, {});
     const formData = $.extend(searchFormData, addFormData);
+    const selectedImages = $.map($(".img-selected"), function(el) {
+        return $(el).attr("src");
+    });
     formData["image_paths"] = JSON.stringify(selectedImages);
     formData["audio_filename"] = $(".btn-audio").data("audio");
     delete formData["image_query"];
@@ -57,25 +65,44 @@ function add() {
     $.post("/add", formData, function(data) {
         $(".add-spinner").addClass("d-none");
         $(".add-form").remove();
-        $("input#word").val("");
+        $("input#word").val("").focus();
         $(".alert-success").removeClass("d-none");
         setTimeout(function() {
             $(".alert-success").addClass("d-none");
-        }, 1000);
+        }, 2000);
     });
 }
 
-var selectedImages = [];
-
 function imgWatch() {
+    var selectedImages = [];
     $("body").on("click", ".gallery img", function() {
-        const isSelected = $(this).hasClass("img-selected");
-        isSelected ? selectedImages.pop(this.src) : selectedImages.push(this.src);
-        $(this).toggleClass("img-selected");
-        console.log(selectedImages);
-    });
+        $(this).addClass("img-selected");
+        selectedImages.push(this.src);
+        $(this).detach().appendTo(".gallery-selected");
+    })
+        .on("click", ".gallery-selected img", function() {
+            $(this).removeClass("img-selected");
+            selectedImages.pop(this.src);
+            $(this).detach().appendTo(".gallery");
+        });
+}
+
+function enterWatch() {
+    $("body").on("keypress", "input#word", function(e) {
+        if (e.which === 13) {
+            e.preventDefault();
+            search();
+        }
+    })
+        .on("keypress", "input#image_query", function(e) {
+            if (e.which === 13) {
+                e.preventDefault();
+                searchImages();
+            }
+        });
 }
 
 $(document).ready(function() {
    imgWatch();
+   enterWatch();
 });

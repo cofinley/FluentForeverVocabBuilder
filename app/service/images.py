@@ -23,7 +23,7 @@ def download_images(query):
         "limit": cfg["NUM_GOOGLE_IMAGES"],
         "format": "jpg"
     })
-    relative_paths = [re.findall(save_path_pat, p)[0].replace(os.sep, '/') for p in paths[query]]
+    relative_paths = [re.findall(save_path_pat, p)[0].replace(os.sep, '/') for p in paths[query] if p]
     return relative_paths
 
 
@@ -33,7 +33,7 @@ def generate_thumbnail(path):
 
     thumb_filename = filename + ".thumb" + ext
     thumbnail_img = Image.open(path)
-    thumbnail_img.thumbnail(cfg["THUMBNAIL_SIZE"], Image.ANTIALIAS)
+    thumbnail_img.thumbnail(cfg["MAX_IMAGE_SIZE"], Image.ANTIALIAS)
     thumbnail_img.save(thumb_filename, format=thumbnail_img.format)
     return thumb_filename
 

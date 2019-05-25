@@ -21,9 +21,15 @@ def download_audio(url):
 def search(query):
     query = parser.fetch(query, cfg["WIKTIONARY_LANGUAGE"])[0]
     pronunciation = query["pronunciations"]
-    ipa = pronunciation["text"][0].replace("IPA: ", "")
-    audio_url = "https:" + pronunciation["audio"][0]
-    audio_filename = download_audio(audio_url).name
+    if len(pronunciation["text"]):
+        ipa = pronunciation["text"][0].replace("IPA: ", "")
+    else:
+        ipa = ""
+    if len(pronunciation["audio"]):
+        audio_url = "https:" + pronunciation["audio"][0]
+        audio_filename = download_audio(audio_url).name
+    else:
+        audio_filename = None
     definition_choices = [(d["partOfSpeech"], d["text"][0]) for d in query["definitions"]]
     return {
         "ipa": ipa,
