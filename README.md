@@ -41,7 +41,7 @@ Gathers the following info:
 1. For Windows, `set FLASK_APP=ff.py`
     - For Linux/Mac, `export FLASK_APP=ff.py`
 1. `flask run`
-1. Go to 127.0.0.1:5000 in your browser
+1. Go to [127.0.0.1:5000](127.0.0.1:5000) in your browser
 1. Select language
    - This is saved in the browser
 1. Select destination deck
