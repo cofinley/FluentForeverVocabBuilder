@@ -7,7 +7,6 @@ from flask import render_template, request, jsonify, send_from_directory
 from app import app, forms
 from app.service import wiktionary, images, anki_connect
 
-
 ac = anki_connect.AnkiConnect()
 save_path_pat = r".*(temp.*)"
 
@@ -39,7 +38,8 @@ def search():
         audio_relative_filename = None
     form.image_query.data = word
 
-    return render_template("search-results.html", word=word, deck=deck_name, form=form, audio_filename=audio_relative_filename)
+    return render_template("search-results.html", word=word, deck=deck_name, form=form,
+                           audio_filename=audio_relative_filename)
 
 
 @app.route("/search-images")
@@ -58,7 +58,8 @@ def add():
     word_usage = args.get("word_usage")
     audio_filename = os.path.join(app.root_path, args.get("audio_filename"))
     json_image_paths = args.get("image_paths")
-    image_paths = images.format_json_image_paths(json_image_paths)
+    parsed_json_image_paths = json.loads(json_image_paths)
+    image_paths = list(map(images.format_json_image_path, parsed_json_image_paths))
     thumbnail_image_paths = list(map(images.generate_thumbnail, image_paths))
     notes = args.get("notes")
     test_spelling = args.get("test_spelling") or ""

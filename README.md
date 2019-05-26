@@ -63,7 +63,6 @@ Gathers the following info:
 
 - [x] Labels because I'm lost
 - [x] Dynamic languages; no French hard-coding
-  - See `config.py`
 - [x] Config
 - [ ] Custom images
   - Ideally drag/drop

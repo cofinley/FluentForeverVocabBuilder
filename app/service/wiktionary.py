@@ -5,6 +5,7 @@ import os
 from wiktionaryparser import WiktionaryParser
 
 from app import app
+
 cfg = app.config
 
 parser = WiktionaryParser()
@@ -37,4 +38,3 @@ def search(query, language):
         "audio_filename": audio_filename,
         "definitions": definition_choices
     }
-

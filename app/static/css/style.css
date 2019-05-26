@@ -7,7 +7,6 @@
 }
 
 .img-search-pane {
-    height: 600px;
     margin: 20px 0 50px;
 }
 
@@ -30,6 +29,6 @@ img {
 
 .gallery,
 .gallery-selected {
-    height: 100%;
-    overflow-y: scroll;
+    height: 600px;
+    overflow-y: auto;
 }
