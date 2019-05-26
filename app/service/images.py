@@ -4,6 +4,7 @@ from urllib.parse import unquote
 from tempfile import NamedTemporaryFile
 from mimetypes import guess_extension
 import base64
+from typing import List
 
 from PIL import Image
 from google_images_download import google_images_download
@@ -16,21 +17,28 @@ cwd = os.getcwd()
 save_path_pat = r".*(temp.*)"
 
 
-def download_images(query):
-    response = google_images_download.googleimagesdownload()  # class instantiation
+def download_images(query: str, page: int) -> List[str]:
+    response = google_images_download.googleimagesdownload()
+
+    num_images = cfg["NUM_GOOGLE_IMAGES"]
+    end = num_images * (page + 1)
+    offset = num_images * page
+    if page > 0:
+        offset += 1
 
     paths = response.download({
         "keywords": query,
         "language": cfg["GOOGLE_IMAGES_LANGUAGE"],
         "output_directory": cfg["TEMP_DIR"],
-        "limit": cfg["NUM_GOOGLE_IMAGES"],
-        "format": "jpg"
+        "limit": end,
+        "format": "jpg",
+        "offset": offset
     })
     relative_paths = [re.findall(save_path_pat, p)[0].replace(os.sep, '/') for p in paths[query] if p]
     return relative_paths
 
 
-def generate_thumbnail(path):
+def generate_thumbnail(path: str) -> str:
     filename = os.path.splitext(path)[0]
     ext = os.path.splitext(path)[1]
 
@@ -41,7 +49,7 @@ def generate_thumbnail(path):
     return thumb_filename
 
 
-def format_json_image_path(json_path):
+def format_json_image_path(json_path: str) -> str:
     if json_path.startswith("data:image"):
         absolute_image_path = save_base64_image_data(json_path)
     else:
@@ -51,7 +59,7 @@ def format_json_image_path(json_path):
     return absolute_image_path
 
 
-def save_base64_image_data(data_string):
+def save_base64_image_data(data_string: str) -> str:
     data_pat = r"data:(image\/.*);base64,(.*)"
     match = re.search(data_pat, data_string)
     if len(match.groups()) > 1:

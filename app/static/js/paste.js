@@ -34,34 +34,6 @@ https://github.com/layerssss/paste.js
     return this;
   };
 
-  $.fn.pastableTextarea = function() {
-    var el, j, len, ref;
-    ref = this;
-    for (j = 0, len = ref.length; j < len; j++) {
-      el = ref[j];
-      if (el._pastable || $(el).is(':not(textarea, input:text)')) {
-        continue;
-      }
-      Paste.mountTextarea(el);
-      el._pastable = true;
-    }
-    return this;
-  };
-
-  $.fn.pastableContenteditable = function() {
-    var el, j, len, ref;
-    ref = this;
-    for (j = 0, len = ref.length; j < len; j++) {
-      el = ref[j];
-      if (el._pastable || $(el).is(':not([contenteditable])')) {
-        continue;
-      }
-      Paste.mountContenteditable(el);
-      el._pastable = true;
-    }
-    return this;
-  };
-
   dataURLtoBlob = function(dataURL, sliceSize) {
     var b64Data, byteArray, byteArrays, byteCharacters, byteNumbers, contentType, i, m, offset, ref, slice;
     if (sliceSize == null) {
@@ -159,94 +131,6 @@ https://github.com/layerssss/paste.js
       return paste._container.on('blur', (function(_this) {
         return function() {
           return $(nonInputable).removeClass('pastable-focus');
-        };
-      })(this));
-    };
-
-    Paste.mountTextarea = function(textarea) {
-      var ctlDown, paste, ref, ref1;
-      if ((typeof DataTransfer !== "undefined" && DataTransfer !== null ? DataTransfer.prototype : void 0) && ((ref = Object.getOwnPropertyDescriptor) != null ? (ref1 = ref.call(Object, DataTransfer.prototype, 'items')) != null ? ref1.get : void 0 : void 0)) {
-        return this.mountContenteditable(textarea);
-      }
-      paste = new Paste(createHiddenEditable().insertBefore(textarea), textarea);
-      ctlDown = false;
-      $(textarea).on('keyup', function(ev) {
-        var ref2;
-        if ((ref2 = ev.keyCode) === 17 || ref2 === 224) {
-          ctlDown = false;
-        }
-        return null;
-      });
-      $(textarea).on('keydown', function(ev) {
-        var ref2;
-        if ((ref2 = ev.keyCode) === 17 || ref2 === 224) {
-          ctlDown = true;
-        }
-        if ((ev.ctrlKey != null) && (ev.metaKey != null)) {
-          ctlDown = ev.ctrlKey || ev.metaKey;
-        }
-        if (ctlDown && ev.keyCode === 86) {
-          paste._textarea_focus_stolen = true;
-          paste._container.focus();
-          paste._paste_event_fired = false;
-          setTimeout((function(_this) {
-            return function() {
-              if (!paste._paste_event_fired) {
-                $(textarea).focus();
-                return paste._textarea_focus_stolen = false;
-              }
-            };
-          })(this), 1);
-        }
-        return null;
-      });
-      $(textarea).on('paste', (function(_this) {
-        return function() {};
-      })(this));
-      $(textarea).on('focus', (function(_this) {
-        return function() {
-          if (!paste._textarea_focus_stolen) {
-            return $(textarea).addClass('pastable-focus');
-          }
-        };
-      })(this));
-      $(textarea).on('blur', (function(_this) {
-        return function() {
-          if (!paste._textarea_focus_stolen) {
-            return $(textarea).removeClass('pastable-focus');
-          }
-        };
-      })(this));
-      $(paste._target).on('_pasteCheckContainerDone', (function(_this) {
-        return function() {
-          $(textarea).focus();
-          return paste._textarea_focus_stolen = false;
-        };
-      })(this));
-      return $(paste._target).on('pasteText', (function(_this) {
-        return function(ev, data) {
-          var content, curEnd, curStart;
-          curStart = $(textarea).prop('selectionStart');
-          curEnd = $(textarea).prop('selectionEnd');
-          content = $(textarea).val();
-          $(textarea).val("" + content.slice(0, curStart) + data.text + content.slice(curEnd));
-          $(textarea)[0].setSelectionRange(curStart + data.text.length, curStart + data.text.length);
-          return $(textarea).trigger('change');
-        };
-      })(this));
-    };
-
-    Paste.mountContenteditable = function(contenteditable) {
-      var paste;
-      paste = new Paste(contenteditable, contenteditable);
-      $(contenteditable).on('focus', (function(_this) {
-        return function() {
-          return $(contenteditable).addClass('pastable-focus');
-        };
-      })(this));
-      return $(contenteditable).on('blur', (function(_this) {
-        return function() {
-          return $(contenteditable).removeClass('pastable-focus');
         };
       })(this));
     };

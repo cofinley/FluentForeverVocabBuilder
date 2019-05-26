@@ -48,20 +48,36 @@ function search() {
     searchImages(word_query);
 }
 
-function searchImages(query) {
+var pageNumber = 0;
+
+function searchImages(query, loadMore) {
     if (!query) {
         $(".image-search-spinner").removeClass("d-none");
         query = $("input#image_query").val();
     }
     $.get("/search-images",
-        {word_query: query},
+        {
+            word_query: query,
+            page: pageNumber
+        },
         function (data) {
+            if (!loadMore) {
+                $(".gallery").html("");
+                pageNumber = 0;
+            }
+            pageNumber++;
+            $(".load-more").remove();
             $(".image-search-spinner").addClass("d-none");
-            $(".gallery").html("");
+            $("<button/>")
+                .text("Load more images")
+                .attr("type", "button")
+                .addClass("load-more btn btn-link")
+                .on("click", searchImages.bind(this, null, true))
+                .appendTo(".gallery");
             data.forEach(function (link) {
-                $("<img/>").attr("src", link).addClass("img-thumbnail").appendTo(".gallery");
+                $("<img/>").attr("src", link).addClass("img-thumbnail").insertBefore(".load-more");
             });
-            initPasteWatch();
+            waitForSelectedGallery();
         }
     );
 }
@@ -101,7 +117,7 @@ function add() {
     });
 }
 
-function imgWatch() {
+function imgSelectWatch() {
     var selectedImages = [];
     $("body").on("click", ".gallery img", function () {
         $(this).addClass("img-selected");
@@ -111,7 +127,7 @@ function imgWatch() {
         .on("click", ".gallery-selected img", function () {
             $(this).removeClass("img-selected");
             selectedImages.pop(this.src);
-            $(this).detach().appendTo(".gallery");
+            $(this).detach().insertBefore(".load-more");
         });
 }
 
@@ -130,24 +146,61 @@ function enterWatch() {
         });
 }
 
-function initPasteWatch() {
+function waitForSelectedGallery() {
     const sel = ".gallery-selected";
     let checkExist = setInterval(function () {
         if ($(sel).length) {
             clearInterval(checkExist);
-            $(sel).pastableNonInputable()
-                .off("pasteImage").on("pasteImage", function (e, data) {
-                    $("<img />")
-                        .attr("src", data.dataURL)
-                        .addClass("img-thumbnail img-selected")
-                        .appendTo(sel);
-                });
+            pasteWatch();
+            dndWatch();
         }
     }, 100);
 }
 
+function pasteWatch() {
+    const sel = ".gallery-selected";
+    $(sel).pastableNonInputable()
+        .off("pasteImage").on("pasteImage", function (e, data) {
+        $("<img />")
+            .attr("src", data.dataURL)
+            .addClass("img-thumbnail img-selected")
+            .appendTo(sel);
+    });
+}
+
+function dndWatch() {
+    const sel = ".gallery-selected";
+    $(sel).off("dragover").on("dragover", function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        e.originalEvent.dataTransfer.dropEffect = "copy";
+        $(this).addClass("dnd-over");
+    })
+        .off("drop").on("drop", function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            const files = e.originalEvent.dataTransfer.files; // Array of all files
+
+            for (let i=0, file; file=files[i]; i++) {
+                if (file.type.match(/image.*/)) {
+                    const reader = new FileReader();
+
+                    reader.onload = function(e2) {
+                        // finished reading file data.
+                        const img = $("<img />")
+                            .attr("src", e2.target.result)
+                            .addClass("img-thumbnail img-selected")
+                            .appendTo(sel);
+                    };
+
+                    reader.readAsDataURL(file); // start reading the file data.
+                }
+            }
+        });
+}
+
 $(document).ready(function () {
     populateDefaults();
-    imgWatch();
+    imgSelectWatch();
     enterWatch();
 });

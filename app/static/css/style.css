@@ -7,7 +7,8 @@
 }
 
 .img-search-pane {
-    margin: 20px 0 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 img {
@@ -24,11 +25,30 @@ img {
 }
 
 .img-selected {
-    border: 3px solid var(--green);
+    border: 3px solid var(--success);
+}
+
+.img-selected:hover {
+    border-color: var(--danger);
 }
 
 .gallery,
 .gallery-selected {
     height: 600px;
     overflow-y: auto;
+}
+
+.gallery-selected {
+    border: 3px dashed gray;
+    background-color: #181818;
+}
+
+.dnd-over,
+.pastable-focus {
+    border-color: lightgray;
+}
+
+.load-more {
+    display: block;
+    margin: 10px auto 20px;
 }
