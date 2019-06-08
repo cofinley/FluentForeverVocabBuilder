@@ -1,12 +1,12 @@
-{% from "bootstrap/form.html" import render_form, render_field, render_form_row %}
+﻿{% from "bootstrap/form.html" import render_form, render_field, render_form_row %}
 
 <form class="add-form mt-4">
     {{ form.csrf_token }}
 
     <label class="form-control-label" for="ipa">IPA</label>
     <div class="form-group d-flex">
-        <input class="form-control w-25" id="ipa" name="ipa" type="text" value="/ʃjɛ̃/">
-        <button type="button" class="btn btn-info btn-audio mb-2 {% if not audio_filename %}disabled{% endif %}" onclick="playSound(this)" data-audio="{{ audio_filename }}">Play Pronunciation</button>
+        <input class="form-control w-25" id="ipa" name="ipa" type="text" value="{{ form.ipa.data }}">
+        <button type="button" class="btn btn-info btn-audio ml-2 {% if not audio_filename %}disabled{% endif %}" onclick="playSound(this)" data-audio="{{ audio_filename }}">Play Pronunciation</button>
     </div>
 
     {{ render_field(form.word_usage) }}
@@ -14,9 +14,11 @@
     <label class="form-control-label" for="image_query">{{ form.image_query.label }}</label>
     <div class="d-flex">
         <input type="text" class="form-control w-25" id="image_query" name="image_query" value="{{ form.image_query.data }}">
-        <button class="btn btn-outline-success ml-2" type="button" onclick="searchImages()">
+        <button class="btn btn-outline-success ml-2 btn-image-search" type="button">
             Search Images
-            <span class="spinner-border spinner-border-sm image-search-spinner d-none" role="status" aria-hidden="true"></span>
+            <div class="spinner-border spinner-border-sm image-search-label-spinner d-none" role="status" aria-hidden="true">
+                <span class="sr-only">Searching new image query...</span>
+            </div>
         </button>
     </div>
 
@@ -28,8 +30,8 @@
     <div class="row img-search-pane">
         <div class="col">
             <div class="gallery border border-dark rounded p-2">
-                <div class="spinner-border" role="status">
-                    <span class="sr-only">Getting images...</span>
+                <div class="spinner-border image-search-result-spinner d-none" role="status">
+                    <span class="sr-only">Loading images...</span>
                 </div>
             </div>
         </div>
@@ -44,5 +46,5 @@
     {{ render_field(form.test_spelling) }}
     <button class="btn btn-primary" id="add-submit" name="add-submit" type="button" value="Add to Anki" onclick="add()">
        Add to Anki
-        <span class="spinner-border spinner-border-sm add-spinner d-none" role="status" aria-hidden="true"></span>
+        <span class="spinner-border spinner-border-sm add-spinner ml-1 d-none" role="status" aria-hidden="true"></span>
 </form>

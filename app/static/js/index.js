@@ -13,6 +13,11 @@ function getDefaults() {
     return false;
 }
 
+/**
+ * Store and load desired target language and Anki deck settings in local storage.
+ * @param {string} language - The target language.
+ * @param {string} deck - The Anki deck (scraped from Anki on backend).
+ */
 
 function setDefaults(language, deck) {
     window.localStorage.setItem("language", language);
@@ -42,41 +47,60 @@ function search() {
         },
         function (data) {
             $(".container").append(data);
+            searchImages(word_query, true);
             $(".search-spinner").addClass("d-none");
         }
     );
-    searchImages(word_query);
 }
 
 var pageNumber = 0;
 
-function searchImages(query, loadMore) {
+/**
+ * Search Google Images for query.
+ * Query inherited by main word query, but can be overridden.
+ * @param {?string} query - The Google Images search query.
+ * @param {boolean} loadFirstPage - True if this the first time searching the query.
+ *   False if "Load More Images" is clicked.
+ */
+function searchImages(query, loadFirstPage) {
     if (!query) {
-        $(".image-search-spinner").removeClass("d-none");
+        $(".image-search-label-spinner").removeClass("d-none");
         query = $("input#image_query").val();
     }
+
+    if (loadFirstPage) {
+        $(".image-search-result-spinner").removeClass("d-none");
+        $(".gallery img, .load-more").remove();
+        pageNumber = 0;
+    } else {
+        $(".image-search-more-spinner").removeClass("d-none");
+    }
+
     $.get("/search-images",
         {
             word_query: query,
-            page: pageNumber
+            page: pageNumber++
         },
         function (data) {
-            if (!loadMore) {
-                $(".gallery").html("");
-                pageNumber = 0;
-            }
-            pageNumber++;
             $(".load-more").remove();
-            $(".image-search-spinner").addClass("d-none");
+            $(".image-search-label-spinner").addClass("d-none");
+            $(".image-search-result-spinner").addClass("d-none");
+            $(".image-search-more-spinner").addClass("d-none");
+
             $("<button/>")
-                .text("Load more images")
+                .html("Load more images" +
+                    '<div class="spinner-border spinner-border-sm image-search-more-spinner ml-2 d-none" role="status">' +
+                        '<span class="sr-only">Loading more images...</span>' +
+                    '</div>')
                 .attr("type", "button")
                 .addClass("load-more btn btn-link")
-                .on("click", searchImages.bind(this, null, true))
+                .on("click", searchImages.bind(this, query, false))
                 .appendTo(".gallery");
+
             data.forEach(function (link) {
                 $("<img/>").attr("src", link).addClass("img-thumbnail").insertBefore(".load-more");
             });
+
             waitForSelectedGallery();
         }
     );
@@ -88,20 +112,27 @@ function playSound(el) {
     audio.play();
 }
 
+/**
+ * Collect all relevant form data and send to backend to be added as an Anki note.
+ */
 function add() {
     $(".add-spinner").removeClass("d-none");
     const searchFormData = $(".search-form").serializeArray().reduce(function (obj, item) {
         obj[item.name] = item.value;
         return obj;
     }, {});
+
     const addFormData = $(".add-form").serializeArray().reduce(function (obj, item) {
         obj[item.name] = item.value;
         return obj;
     }, {});
+
     const formData = $.extend(searchFormData, addFormData);
+
     const selectedImages = $.map($(".img-selected"), function (el) {
         return $(el).attr("src");
     });
+
     formData["image_paths"] = JSON.stringify(selectedImages);
     formData["audio_filename"] = $(".btn-audio").data("audio");
     delete formData["image_query"];
@@ -117,6 +148,17 @@ function add() {
     });
 }
 
+
+function imgSearchWatch() {
+    $("body").on("click", ".btn-image-search", function() {
+        searchImages(null, true);
+    });
+}
+
+/**
+ * Setup click listeners on images.
+ * Swap images from the search pane to the selected pane and vice versa.
+ */
 function imgSelectWatch() {
     var selectedImages = [];
     $("body").on("click", ".gallery img", function () {
@@ -141,7 +183,7 @@ function enterWatch() {
         .on("keypress", "input#image_query", function (e) {
             if (e.which === 13) {
                 e.preventDefault();
-                searchImages();
+                searchImages(null, true);
             }
         });
 }
@@ -157,6 +199,9 @@ function waitForSelectedGallery() {
     }, 100);
 }
 
+/**
+ * Watch for images in clipboard to be pasted in the selected pane.
+ */
 function pasteWatch() {
     const sel = ".gallery-selected";
     $(sel).pastableNonInputable()
@@ -168,6 +213,11 @@ function pasteWatch() {
     });
 }
 
+/**
+ * Setup drag n' drop listener on selected image pane.
+ * This pane handles dragging files, not images from <img> tags in-browser.
+ * Set dragged-in image sources as base64-encoded data.
+ */
 function dndWatch() {
     const sel = ".gallery-selected";
     $(sel).off("dragover").on("dragover", function(e) {
@@ -187,7 +237,7 @@ function dndWatch() {
 
                     reader.onload = function(e2) {
                         // finished reading file data.
-                        const img = $("<img />")
+                        $("<img />")
                             .attr("src", e2.target.result)
                             .addClass("img-thumbnail img-selected")
                             .appendTo(sel);
@@ -201,6 +251,7 @@ function dndWatch() {
 
 $(document).ready(function () {
     populateDefaults();
+    imgSearchWatch();
     imgSelectWatch();
     enterWatch();
 });
