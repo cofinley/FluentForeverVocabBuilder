@@ -26,7 +26,6 @@ Gathers the following info:
 ## Requirements
 
 - Python 3
-- `pip install -r requirements.txt`
 - ffmpeg installed and added to system PATH (for previewing pronunciation audio)
 - [Model deck](http://www.fluent-forever.com/wp-content/uploads/2014/05/Model-Deck-May-2014.apkg) from FF imported into Anki
   - This program only creates the "2. Picture Words" note type at the moment
@@ -34,10 +33,22 @@ Gathers the following info:
 - [AnkiConnect add-on](https://foosoft.net/projects/anki-connect/) (code 2055492159)
 - Anki needs to be open before starting the app
 
+## Installation
+
+- `git clone https://github.com/cofinley/FluentForeverVocabBuilder.git`
+- Go into the project's directory
+- `python -m venv venv`
+  - Python 3
+- `venv\Scripts\activate`
+  - Forward slashes on Linux/Mac
+- `pip install -r requirements.txt`
+
 
 ## Usage
 
-1. Open Anki
+1. Open Anki in the background
+1. Go into project's directory
+1. `venv\Scripts\activate`
 1. For Windows, `set FLASK_APP=ff.py`
     - For Linux/Mac, `export FLASK_APP=ff.py`
 1. `flask run`
@@ -50,6 +61,8 @@ Gathers the following info:
 1. Search (takes time to download images)
 1. Tweak any values
 1. Select pic(s)
+  - You can paste images from your clipboard with Ctrl+V 
+  - You can also drag files in
 1. Enter any notes you want
 1. Submit (takes time to store everything into Anki)
 1. Repeat
@@ -64,7 +77,7 @@ Gathers the following info:
 - [x] Labels because I'm lost
 - [x] Dynamic languages; no French hard-coding
 - [x] Config
-- [ ] Custom images
+- [x] Custom images
   - Ideally drag/drop
 - [ ] More recordings from Forvo, maybe
 - [x] Better layout, padding
