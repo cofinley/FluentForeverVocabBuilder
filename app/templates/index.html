@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% from "bootstrap/form.html" import render_form, render_field, render_form_row %}
+
+{% block content %}
+    <div class="alert alert-success" role="alert">
+        Added to Anki!
+    </div>
+    <form class="search-form" novalidate>
+        {{ form.csrf_token }}
+        {{ render_field(form.language) }}
+        {{ render_field(form.decks) }}
+        {{ render_field(form.word) }}
+        <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset</button>
+        <button class="btn btn-primary" id="search-submit" name="search-submit" type="button" value="Submit"
+                onclick="search()">
+            Search
+            <span class="spinner-border spinner-border-sm search-spinner ml-1 d-none" role="status"
+                  aria-hidden="true"></span>
+        </button>
+    </form>
+{% endblock %}

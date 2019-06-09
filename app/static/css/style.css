@@ -1,0 +1,54 @@
+.alert {
+    display: none;
+}
+
+.form-control {
+    width: 50%;
+}
+
+.img-search-pane {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+img {
+    max-height: 150px;
+    margin: 5px;
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+    user-select: none;          /* Likely future */
+
+    -webkit-user-drag: none; /* Prevents dragging of images/divs etc */
+    -moz-user-drag: none;     /* Firefox all */
+    user-drag: none;
+}
+
+.img-selected {
+    border: 3px solid var(--success);
+}
+
+.img-selected:hover {
+    border-color: var(--danger);
+}
+
+.gallery,
+.gallery-selected {
+    height: 600px;
+    overflow-y: auto;
+}
+
+.gallery-selected {
+    border: 3px dashed gray;
+    background-color: #181818;
+}
+
+.dnd-over,
+.pastable-focus {
+    border-color: lightgray;
+}
+
+.load-more {
+    display: block;
+    margin: 10px auto 20px;
+}
