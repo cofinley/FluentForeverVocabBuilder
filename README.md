@@ -76,13 +76,6 @@ Gathers the following info:
 
 ## Todo
 
-- [x] Labels because I'm lost
-- [x] Dynamic languages; no French hard-coding
-- [x] Config
-- [x] Custom images
-  - Ideally drag/drop
+- [ ] Easier installation and startup
 - [ ] More recordings from Forvo, maybe
-- [x] Better layout, padding
-- [x] Less main GUI thread blocking on network requests
-  - [ ] ~~And progress bars~~
 - [ ] Other note types in the model deck (i.e. grammar, minimal pairs)
