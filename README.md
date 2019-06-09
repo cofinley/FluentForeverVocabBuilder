@@ -63,8 +63,8 @@ Gathers the following info:
 1. Search (takes time to download images)
 1. Tweak any values
 1. Select pic(s)
-  - You can paste images from your clipboard with Ctrl+V 
-  - You can also drag files in
+   - You can paste images from your clipboard with Ctrl+V 
+   - You can also drag files in
 1. Enter any notes you want
 1. Submit (takes time to store everything into Anki)
 1. Repeat
