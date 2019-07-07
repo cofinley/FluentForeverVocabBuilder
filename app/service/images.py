@@ -34,7 +34,7 @@ def download_images(query: str, page: int) -> List[str]:
         "format": "jpg",
         "offset": offset
     })
-    relative_paths = [re.findall(save_path_pat, p)[0].replace(os.sep, '/') for p in paths[0][query] if p]
+    relative_paths = [re.findall(save_path_pat, p)[0].replace(os.sep, '/') for p in paths[query] if p]
     return relative_paths
 
 

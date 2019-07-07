@@ -65,9 +65,11 @@ class AnkiConnect:
         formatted_notes = self.format_notes(notes)
         gender_notes_field = escaped_gender_text + formatted_notes
 
-        stored_audio_filename = self.store_media_file(recording_file_path, word)
+        pronunciation_field = ipa_text
 
-        pronunciation_field = ipa_text + "[sound:{}]".format(stored_audio_filename)
+        if recording_file_path:
+            stored_audio_filename = self.store_media_file(recording_file_path, word)
+            pronunciation_field += "[sound:{}]".format(stored_audio_filename)
 
         test_spelling = 'y' if test_spelling else ''
 

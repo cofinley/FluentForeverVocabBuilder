@@ -35,7 +35,7 @@ def search():
     if audio_filename:
         audio_relative_filename = re.findall(save_path_pat, audio_filename)[0].replace(os.sep, '/')
     else:
-        audio_relative_filename = None
+        audio_relative_filename = ""
     form.image_query.data = word
 
     return render_template("search-results.html", word=word, deck=deck_name, form=form,
@@ -57,7 +57,11 @@ def add():
     deck = args.get("decks")
     ipa = args.get("ipa")
     word_usage = args.get("word_usage")
-    audio_filename = os.path.join(app.root_path, args.get("audio_filename"))
+    audio_arg = args.get("audio_filename")
+    if audio_arg:
+        audio_filename = os.path.join(app.root_path, audio_arg)
+    else:
+        audio_filename = None
     json_image_paths = args.get("image_paths")
     parsed_json_image_paths = json.loads(json_image_paths)
     image_paths = list(map(images.format_json_image_path, parsed_json_image_paths))

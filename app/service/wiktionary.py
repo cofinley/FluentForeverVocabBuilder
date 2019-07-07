@@ -31,7 +31,7 @@ def search(query, language):
         audio_url = "https:" + pronunciation["audio"][0]
         audio_filename = download_audio(audio_url).name
     else:
-        audio_filename = None
+        audio_filename = ""
     definition_choices = [(d["partOfSpeech"], d["text"][0]) for d in query["definitions"]]
     return {
         "ipa": ipa,
