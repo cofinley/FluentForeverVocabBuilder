@@ -47,7 +47,7 @@ function search() {
         },
         function (data) {
             $(".container").append(data);
-            searchImages(word_query, true);
+            searchImages(word_query, language, true);
             $(".search-spinner").addClass("d-none");
         }
     );
@@ -59,13 +59,18 @@ var pageNumber = 0;
  * Search Google Images for query.
  * Query inherited by main word query, but can be overridden.
  * @param {?string} query - The Google Images search query.
+ * @param {?string} language - Current language setting.
  * @param {boolean} loadFirstPage - True if this the first time searching the query.
  *   False if "Load More Images" is clicked.
  */
-function searchImages(query, loadFirstPage) {
+function searchImages(query, language, loadFirstPage) {
     if (!query) {
         $(".image-search-label-spinner").removeClass("d-none");
         query = $("input#image_query").val();
+    }
+
+    if (!language) {
+        language = $("select#language").val();
     }
 
     if (loadFirstPage) {
@@ -79,6 +84,7 @@ function searchImages(query, loadFirstPage) {
     $.get("/search-images",
         {
             word_query: query,
+            language, language,
             page: pageNumber++
         },
         function (data) {
@@ -94,7 +100,7 @@ function searchImages(query, loadFirstPage) {
                     '</div>')
                 .attr("type", "button")
                 .addClass("load-more btn btn-link")
-                .on("click", searchImages.bind(this, query, false))
+                .on("click", searchImages.bind(this, query, language, false))
                 .appendTo(".gallery");
 
             data.forEach(function (link) {
@@ -151,7 +157,7 @@ function add() {
 
 function imgSearchWatch() {
     $("body").on("click", ".btn-image-search", function() {
-        searchImages(null, true);
+        searchImages(null, null , true);
     });
 }
 
@@ -183,7 +189,7 @@ function enterWatch() {
         .on("keypress", "input#image_query", function (e) {
             if (e.which === 13) {
                 e.preventDefault();
-                searchImages(null, true);
+                searchImages(null, null, true);
             }
         });
 }

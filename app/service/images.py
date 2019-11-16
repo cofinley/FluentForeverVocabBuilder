@@ -17,7 +17,7 @@ cwd = os.getcwd()
 save_path_pat = r".*(temp.*)"
 
 
-def download_images(query: str, page: int) -> List[str]:
+def download_images(query: str, page: int, language=None) -> List[str]:
     response = google_images_download.googleimagesdownload()
 
     num_images = cfg["NUM_GOOGLE_IMAGES"]
@@ -26,14 +26,16 @@ def download_images(query: str, page: int) -> List[str]:
     if page > 0:
         offset += 1
 
-    paths = response.download({
+    args = {
         "keywords": query,
-        "language": cfg["GOOGLE_IMAGES_LANGUAGE"],
+        "language": language or cfg["GOOGLE_IMAGES_LANGUAGE"],
         "output_directory": cfg["TEMP_DIR"],
         "limit": end,
         "format": "jpg",
         "offset": offset
-    })
+    }
+
+    paths = response.download(args)
     relative_paths = [re.findall(save_path_pat, p)[0].replace(os.sep, '/') for p in paths[query] if p]
     return relative_paths
 

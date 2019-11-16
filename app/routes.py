@@ -44,9 +44,11 @@ def search():
 
 @app.route("/search-images")
 def search_images():
-    word = request.args.get("word_query")
-    page = int(request.args.get("page", 0))
-    image_paths = images.download_images(word, page)
+    req = request.args
+    word = req.get("word_query")
+    language = req.get("language")
+    page = int(req.get("page", 0))
+    image_paths = images.download_images(word, page, language)
     return jsonify(image_paths)
 
 
