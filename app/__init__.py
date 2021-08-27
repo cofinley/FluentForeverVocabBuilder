@@ -31,3 +31,10 @@ def remove_temp_files():
 remove_temp_files()
 setup_temp_dir()
 
+
+import logging
+logging.basicConfig(format='%(levelname)-7s %(relativeCreated)9dms: %(message)s', datefmt='%H:%M:%S', level=logging.INFO)
+logger = logging.getLogger(__name__)  # module fully-qualified name
+debug = logger.debug   # debug('xx %s', v)
+info = logger.info
+error = logger.error
