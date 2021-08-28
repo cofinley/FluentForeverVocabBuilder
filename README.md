@@ -38,6 +38,22 @@ Gathers the following info:
 
 ## Installation
 
+### preparation
+
+Zlib and libjpeg are required by Pillow
+https://pillow.readthedocs.io/en/latest/installation.html
+
+
+#### macOS
+```
+brew install zlib
+# see output, set shell env-vars, for example:
+export LDFLAGS="-L/usr/local/opt/zlib/lib"
+export CPPFLAGS="-I/usr/local/opt/zlib/include"
+
+```
+
+### follow
 - `git clone https://github.com/cofinley/FluentForeverVocabBuilder.git`
 - Go into the project's directory
 - `python3 -m venv venv`
