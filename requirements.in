@@ -6,7 +6,7 @@ Click>7.0
 Flask>1.0.2,<2
 Flask-WTF>0.14.2
 future>0.17.1
-google-images-download @ git+https://github.com/Joeclinton1/google-images-download@dd0b83d3982aeb444e5ed7f55bf5ed5edc5c99fe#egg=google-images-download
+google-images-download @ git+https://github.com/d0codesoft/google-images-download@f0f9ed6b85b085e3749f08ba803624031fb12939#egg=google-images-download
 idna>2.8
 itsdangerous>=1.1.0
 Jinja2>2.10.1
