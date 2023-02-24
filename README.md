@@ -38,13 +38,30 @@ Gathers the following info:
 
 ## Installation
 
+### preparation
+
+Zlib and libjpeg are required by Pillow
+https://pillow.readthedocs.io/en/latest/installation.html
+
+
+#### macOS
+```
+brew install zlib
+# see output, set shell env-vars, for example:
+export LDFLAGS="-L/usr/local/opt/zlib/lib"
+export CPPFLAGS="-I/usr/local/opt/zlib/include"
+
+```
+
+### follow
 - `git clone https://github.com/cofinley/FluentForeverVocabBuilder.git`
 - Go into the project's directory
-- `python -m venv venv`
+- `python3 -m venv venv`
   - Python 3
 - `venv\Scripts\activate`
-  - Forward slashes on Linux/Mac
-- `pip install -r requirements.txt`
+  - on Linux/Mac  `source venv/bin/activate`
+- `pip3 install --upgrade wheel pip`
+- `pip3 install -r requirements.txt`
 
 
 ## Usage
@@ -74,7 +91,16 @@ Gathers the following info:
 
 - Go to the installation directory for the project
 - `git pull`
-- `pip install -r requirements.txt`
+- `pip3 install -r requirements.txt`
+
+## Development
+
+`pip3 install pip-tools`
+
+Specify major (not exact) package versions in file `requirements.in` then compile `requirements.txt` from it.
+`pip-compile requirements.in`
+
+`requirements.txt` holds exact versions
 
 ## Known Issues
 
@@ -87,3 +113,10 @@ Gathers the following info:
     - Batch/bash files created, a whole installer would be nice
 - [ ] More recordings from Forvo, maybe
 - [ ] Other note types in the model deck (i.e. grammar, minimal pairs)
+
+
+Image was not working
+see https://github.com/hardikvasa/google-images-download/pull/298
+solutions:
+- now, see `requirements.in` (may need to update from time to time)
+- maybe try fix it by using https://github.com/RiddlerQ/simple_image_download  
