@@ -31,7 +31,7 @@ flask-wtf==0.15.1
     # via -r requirements.in
 future==0.18.2
     # via -r requirements.in
-git+https://github.com/Joeclinton1/google-images-download@dd0b83d3982aeb444e5ed7f55bf5ed5edc5c99fe#egg=google-images-download
+git+https://github.com/d0codesoft/google-images-download@f0f9ed6b85b085e3749f08ba803624031fb12939#egg=google-images-download
     # via -r requirements.in
 idna==3.2
     # via
